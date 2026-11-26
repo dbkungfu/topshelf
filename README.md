@@ -69,7 +69,7 @@ Press **?** in the app for a short how-to.
 
 You can host your own copy so you can open it from any browser:
 
-- **GitHub Pages:** in this repository, go to Settings > Pages > Deploy from a branch > `main` / root.
+- **GitHub Pages:** unzip the download, upload all files to your repository, go to Settings > Pages > Deploy from a branch > `main` / root.
 - **Netlify:** unzip the download and drop the folder onto <https://app.netlify.com/drop> to get your own link.
 
 Your lists are still saved on the computer you use, never on the host. The link isn't password-protected, so share it only with people you trust. I'm not affiliated with Netlify or GitHub. Free plans have usage limits; if you use up the allowance, the hosted link stops working until it resets or you upgrade (the downloaded copy is unaffected).
