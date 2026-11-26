@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#161a21">
+  <meta name="application-name" content="Top Shelf">
+  <title>Top Shelf — rank your board game collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e2b04a'/%3E%3Cg fill='%23161a21'%3E%3Crect x='7.5' y='5' width='5' height='8' rx='1'/%3E%3Crect x='13.5' y='7.5' width='4.5' height='5.5' rx='1'/%3E%3Crect x='19.5' y='4.5' width='5' height='8.5' rx='1'/%3E%3Crect x='6' y='13' width='20' height='2.5' rx='1'/%3E%3Cg opacity='.5'%3E%3Crect x='8' y='18' width='6' height='6' rx='1'/%3E%3Crect x='15.5' y='19.5' width='5' height='4.5' rx='1'/%3E%3C/g%3E%3Crect x='6' y='24' width='20' height='2.5' rx='1'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="currentColor"/>
+        <g fill="#161a21">
+          <rect x="7.5" y="5" width="5" height="8" rx="1"/>
+          <rect x="13.5" y="7.5" width="4.5" height="5.5" rx="1"/>
+          <rect x="19.5" y="4.5" width="5" height="8.5" rx="1"/>
+          <rect x="6" y="13" width="20" height="2.5" rx="1"/>
+          <g opacity=".5"><rect x="8" y="18" width="6" height="6" rx="1"/><rect x="15.5" y="19.5" width="5" height="4.5" rx="1"/></g>
+          <rect x="6" y="24" width="20" height="2.5" rx="1"/>
+        </g>
+      </svg>
+      <span class="brand-name">Top Shelf</span>
+    </div>
+
+    <div class="list-switch">
+      <label class="list-title">
+        <span class="visually-hidden">Tier list title</span>
+        <input id="listTitle" type="text" value="My board game tier list" maxlength="80" spellcheck="false" autocomplete="off">
+      </label>
+      <button type="button" id="listsBtn" class="list-switch-btn" aria-haspopup="menu" aria-expanded="false" aria-label="Switch tier list" title="Your tier lists">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="toolbar" role="toolbar" aria-label="Tier list actions">
+      <div class="segmented" role="group" aria-label="Tile size">
+        <button type="button" data-size="sm" aria-pressed="false" title="Small tiles">S</button>
+        <button type="button" data-size="md" aria-pressed="true" title="Medium tiles">M</button>
+        <button type="button" data-size="lg" aria-pressed="false" title="Large tiles">L</button>
+      </div>
+      <button type="button" id="namesToggle" class="btn btn-ghost btn-icon" aria-pressed="false" aria-label="Show game names" title="Game names: off. Click to show under each box">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 3h11A1.5 1.5 0 0 1 17 4.5V11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 11V4.5A1.5 1.5 0 0 1 4.5 3zM3.5 15.2h13M3.5 18h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" id="fxBtn" class="btn btn-ghost btn-icon fx-btn" aria-pressed="true" aria-label="Cinematic effect" title="Cinematic effect: on"></button>
+      <button type="button" id="previewBtn" class="btn btn-ghost btn-icon preview-btn" aria-pressed="true" aria-label="Hover preview" title="Hover preview: on"></button>
+      <button type="button" id="themeBtn" class="btn btn-ghost btn-icon theme-btn" aria-label="Theme" title="Theme" aria-haspopup="menu" aria-expanded="false"></button>
+      <div class="split">
+        <button type="button" id="exportBtn" class="btn btn-primary split-main">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Export PNG</span>
+        </button>
+        <button type="button" id="exportMenuBtn" class="btn btn-primary split-more" aria-haspopup="menu" aria-expanded="false" aria-label="More export options">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 8l4.5 4.5L14.5 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <button type="button" id="moreBtn" class="btn btn-ghost btn-icon" aria-haspopup="menu" aria-expanded="false" aria-label="More actions" title="More">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="4.5" cy="10" r="1.6" fill="currentColor"/><circle cx="10" cy="10" r="1.6" fill="currentColor"/><circle cx="15.5" cy="10" r="1.6" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="saveNotice" class="save-notice" role="alert" hidden>
+    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5l7 12.5H3L10 3.5zM10 8.5v3.2M10 13.6v.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p id="saveNoticeText"></p>
+    <button type="button" id="saveNoticeBtn" class="btn btn-secondary" hidden>Try again</button>
+  </div>
+
+  <main class="workspace">
+    <section class="board-wrap" aria-label="Tier list">
+      <div id="stats" class="stats" aria-live="polite"></div>
+      <div id="board" class="board"></div>
+      <button type="button" id="addTierBtn" class="add-tier">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Add tier
+      </button>
+    </section>
+
+    <aside class="tray" aria-label="Unranked games">
+      <div class="tray-head">
+        <h2>Unranked <span id="trayCount" class="count">0</span></h2>
+        <button type="button" id="addImagesBtn" class="btn btn-secondary">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Add images
+        </button>
+      </div>
+      <div id="trayZone" class="zone tray-zone" data-zone="tray" role="list" aria-label="Unranked games"></div>
+      <div id="trayEmpty" class="tray-empty" hidden>
+        <div class="tray-empty-art" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </div>
+        <p class="tray-empty-title">Add your box art</p>
+        <p class="tray-empty-text">Drop images anywhere on this page, paste from your clipboard, or choose files. Tip: save cover images from each game's BoardGameGeek page. File names become game titles, so rename them first.</p>
+        <button type="button" id="sampleBtn" class="btn btn-ghost sample-btn">Try with sample games</button>
+        <button type="button" class="link-btn" data-help="howto">New here? See how it works</button>
+      </div>
+      <p class="tray-hint">Drag tiles between rows, or click a tile to pick its tier. Hover a tile and press 1–6 to rank it fast. Delete sends a focused tile back here.</p>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <span>Top Shelf <span class="js-version">v1.6.1</span></span>
+    <span aria-hidden="true">·</span>
+    <button type="button" class="link-btn" data-help="howto">How to use</button>
+    <span aria-hidden="true">·</span>
+    <button type="button" class="link-btn" data-help="about">About</button>
+  </footer>
+
+  <input id="fileInput" type="file" accept="image/*" multiple hidden>
+  <input id="backupInput" type="file" accept="application/json,.json" hidden>
+
+  <div id="dropOverlay" class="drop-overlay" hidden>
+    <div class="drop-overlay-card">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 16v2.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>Drop images to add them to Unranked</p>
+    </div>
+  </div>
+
+  <div id="popover" class="popover" role="dialog" aria-label="Tier settings" hidden></div>
+  <div id="menu" class="menu" role="menu" hidden></div>
+
+  <dialog id="quickDialog" class="quick" aria-label="Rank this game">
+    <div class="quick-back" aria-hidden="true">
+      <div class="quick-back-inner">
+        <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="currentColor"/><g fill="#161a21"><rect x="7.5" y="5" width="5" height="8" rx="1"/><rect x="13.5" y="7.5" width="4.5" height="5.5" rx="1"/><rect x="19.5" y="4.5" width="5" height="8.5" rx="1"/><rect x="6" y="13" width="20" height="2.5" rx="1"/><g opacity=".5"><rect x="8" y="18" width="6" height="6" rx="1"/><rect x="15.5" y="19.5" width="5" height="4.5" rx="1"/></g><rect x="6" y="24" width="20" height="2.5" rx="1"/></g></svg>
+        <span>Top Shelf</span>
+      </div>
+    </div>
+    <div class="quick-card">
+      <button type="button" class="quick-close icon-btn" id="quickClose" aria-label="Close">
+        <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="quick-art"><img id="quickImg" alt=""></div>
+      <div class="quick-side">
+        <div class="quick-title-row">
+          <h3 id="quickName" class="quick-name"></h3>
+          <button type="button" id="quickRename" class="icon-btn" aria-label="Rename game" title="Rename">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3l9.5-9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <p id="quickWhere" class="quick-where"></p>
+        <div id="quickTiers" class="quick-tiers" role="group" aria-label="Choose a tier"></div>
+        <div class="quick-actions">
+          <button type="button" id="quickUnrank" class="btn btn-ghost">Back to Unranked</button>
+        </div>
+        <p class="quick-hint">Press a number to choose a tier, 0 for Unranked.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="zoomScrim" class="zoom-scrim" aria-hidden="true"></div>
+  <div id="zoom" class="zoom" aria-hidden="true">
+    <div class="zoom-stage">
+      <div class="zoom-aura"></div>
+      <div class="zoom-card">
+        <div class="zoom-frame">
+          <div class="zoom-media"><img alt=""><div class="zoom-glare"></div><div class="zoom-sweep"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="zoom-meta">
+      <div class="zoom-head">
+        <div class="zoom-name"></div>
+        <div class="zoom-status"></div>
+      </div>
+      <div class="zoom-keys"></div>
+      <div class="zoom-hint"></div>
+    </div>
+  </div>
+
+  <dialog id="helpDialog" class="help" aria-labelledby="helpTitle">
+    <header class="help-head">
+      <svg class="help-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><g fill="#161a21"><rect x="7.5" y="5" width="5" height="8" rx="1"/><rect x="13.5" y="7.5" width="4.5" height="5.5" rx="1"/><rect x="19.5" y="4.5" width="5" height="8.5" rx="1"/><rect x="6" y="13" width="20" height="2.5" rx="1"/><g opacity=".5"><rect x="8" y="18" width="6" height="6" rx="1"/><rect x="15.5" y="19.5" width="5" height="4.5" rx="1"/></g><rect x="6" y="24" width="20" height="2.5" rx="1"/></g></svg>
+      <div class="help-titles">
+        <h2 id="helpTitle">Top Shelf</h2>
+        <p>Rank your board game collection <span class="help-version js-version">v1.6.1</span></p>
+      </div>
+      <button type="button" class="icon-btn help-close" id="helpClose" aria-label="Close">
+        <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </header>
+
+    <div class="help-tabs" role="tablist" aria-label="Help sections">
+      <button type="button" role="tab" id="tab-howto" aria-controls="panel-howto" aria-selected="true" data-tab="howto">How to use</button>
+      <button type="button" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" data-tab="about" tabindex="-1">About</button>
+    </div>
+
+    <div class="help-body">
+      <section id="panel-howto" role="tabpanel" aria-labelledby="tab-howto" class="help-panel">
+        <div class="help-grid">
+          <article class="help-card">
+            <h3><span class="help-n">1</span>Add games</h3>
+            <p>Drop box art onto the page, paste it, or click <strong>Add images</strong>. Save covers from each game's BoardGameGeek page, and name the files after the games. Or just click <strong>Try with sample games</strong>.</p>
+          </article>
+          <article class="help-card">
+            <h3><span class="help-n">2</span>Rank them</h3>
+            <p>Drag a game into a tier, or click it and pick one. Hover a game and press <kbd>1</kbd>–<kbd>6</kbd> to rank it fast.</p>
+          </article>
+          <article class="help-card">
+            <h3><span class="help-n">3</span>Edit tiers</h3>
+            <p>Click a tier's letter to rename it. Use <strong>⋮</strong> on a row for colour, order, clear or delete. <strong>×</strong> on a game sends it back to Unranked.</p>
+          </article>
+          <article class="help-card">
+            <h3><span class="help-n">4</span>Lists</h3>
+            <p>Click the list title to switch, add or duplicate lists, or use the bin to delete one. <strong>⋯ › Reset list</strong> clears the current list.</p>
+          </article>
+          <article class="help-card">
+            <h3><span class="help-n">5</span>Save and share</h3>
+            <p>Pick a folder in Chrome or Edge and lists save automatically. <strong>Export PNG</strong> saves a picture; <strong>⋯ › Back up all lists</strong> saves a copy.</p>
+          </article>
+          <article class="help-card">
+            <h3><span class="help-n">6</span>Toolbar</h3>
+            <p>Tile size, game names, <strong>movie camera</strong> (Cinematic effect), eye (hover preview), palette (themes).</p>
+          </article>
+        </div>
+
+        <h3 class="help-sub">Keyboard</h3>
+        <dl class="help-keys">
+          <div><dt><kbd>1</kbd>–<kbd>9</kbd></dt><dd>Rank the hovered or focused game (<kbd>0</kbd> = Unranked)</dd></div>
+          <div><dt><kbd>Delete</kbd></dt><dd>Back to Unranked, or delete from Unranked</dd></div>
+          <div><dt><kbd>?</kbd></dt><dd>Open this help</dd></div>
+        </dl>
+      </section>
+
+      <section id="panel-about" role="tabpanel" aria-labelledby="tab-about" class="help-panel" hidden>
+        <p class="help-lead">A free, fast way to rank your board games into tiers. No account, no ads.</p>
+
+        <dl class="about-list">
+          <div><dt>Version</dt><dd><strong class="js-version">v1.6.1</strong> <span class="about-muted">· <span id="aboutDate">26 November 2026</span></span></dd></div>
+          <div><dt>Designed by</dt><dd><strong>dbkungfu@bgg</strong>, with AI assistance</dd></div>
+          <div><dt>Saving to</dt><dd id="aboutSaving">…</dd></div>
+          <div><dt>Privacy</dt><dd>Everything stays on your computer. Nothing is uploaded.</dd></div>
+          <div><dt>Browsers</dt><dd>Folder saving needs Chrome or Edge. Elsewhere, use <strong>Back up all lists</strong>.</dd></div>
+          <div><dt>License</dt><dd>Free for non-commercial use (PolyForm Noncommercial 1.0.0).</dd></div>
+          <div><dt>Box art</dt><dd>Belongs to its publishers and artists.</dd></div>
+        </dl>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="folderDialog" class="dialog folder-dialog" aria-labelledby="folderTitle">
+    <div class="folder-art" aria-hidden="true">
+      <svg viewBox="0 0 20 20"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H8l1.7 2h5.8A1.5 1.5 0 0 1 17 8.5v6a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 14.5v-8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </div>
+    <h3 id="folderTitle">Where should Top Shelf keep your lists?</h3>
+    <p>Choose a folder on this computer. Your lists and box art are saved there as ordinary files, so they are still there next time. Tip: make a new, empty folder just for this.</p>
+    <p id="folderError" class="folder-error" role="alert" hidden></p>
+    <div class="folder-actions">
+      <button type="button" id="folderContinue" class="btn btn-primary" hidden>Continue with “<span id="folderContinueName"></span>”</button>
+      <button type="button" id="folderChoose" class="btn btn-primary">Choose folder…</button>
+      <button type="button" id="folderSkip" class="btn btn-ghost">Use without saving</button>
+    </div>
+    <p class="folder-note">Works in Chrome and Edge. Top Shelf only reads and writes inside the folder you pick.</p>
+  </dialog>
+
+  <dialog id="renameDialog" class="dialog">
+    <form method="dialog" id="renameForm">
+      <h3>Rename game</h3>
+      <input id="renameInput" type="text" maxlength="60" autocomplete="off" spellcheck="false" aria-label="Game name">
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" id="renameCancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="dialog">
+    <form method="dialog" id="confirmForm">
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmText"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" id="confirmCancel">Cancel</button>
+        <button type="submit" class="btn btn-danger" id="confirmOk">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
